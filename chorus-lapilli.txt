@@ -9,3 +9,6 @@ The fix was simple, all I had to do was add a check to the adjacent move to ensu
 
 October 19th, 10:44 AM:
 I restricted moves to only adjacent squares by making a function that checks the start and end to see if a move is adjacent. I ran into a problem with square 0, since I was checking if there was a start position by doing !adjNext, but this would return false even when we had a position as 0. I fixed this by checking for a start position by using adjNext == null.
+
+October 19th, 2:48 PM:
+Added a restriction to the adjacent check to stop the a move if the center is occupied by the current actor and the move they are making does not win. I was confused as to why it was not working, but then I realized that moving the center piece should not have this restriction so I made it so that the restriction does not apply if start == 4.

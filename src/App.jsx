@@ -20,6 +20,49 @@ export default function Board() {
   const [numMoves, setNumMoves] = useState(0);
   const [adjNext, setAdjNext] = useState(null);
 
+  function adjacentMove(start, end){
+    
+    let canMove = false;
+
+
+    if (start == 0) {
+      canMove = [1, 3, 4].includes(end);
+    }
+    else if (start == 1) {
+      canMove = [0, 2, 3, 4, 5].includes(end);
+    }
+    else if (start == 2) {
+      canMove = [1, 4, 5].includes(end);
+    }
+    else if (start == 3) {
+      canMove = [0, 1, 4, 6, 7].includes(end);
+    }
+    else if (start == 4) {
+      canMove = [0, 1, 2, 3, 5, 6, 7, 8].includes(end);
+    }
+    else if (start == 5) {
+      canMove = [1, 2, 4, 7, 8].includes(end);
+    }
+    else if (start == 6) {
+      canMove = [3, 4, 7].includes(end);
+    }
+    else if (start == 7) {
+      canMove = [3, 4, 5, 6, 8].includes(end);
+    }
+    else if (start == 8) {
+      canMove = [4, 5, 7].includes(end);
+    }
+    
+    if (!canMove) return false;
+
+
+    const nextSquares = squares.slice();
+    nextSquares[end] = nextSquares[start];
+    nextSquares[start] = null;
+    if (!calculateWinner(nextSquares) && squares[4] == (XIsNext ? 'X' : 'O') && start != 4) return false;
+
+    return canMove;
+  }
 
   function handleClick(i) {
     if (numMoves < 6) {
@@ -37,9 +80,9 @@ export default function Board() {
       setNumMoves(numMoves+1);
     } else {
       const nextSquares = squares.slice();
-      
+
       if (adjNext == null) {
-        if (!squares[i]) return;
+        if (!squares[i] || calculateWinner(squares)) return;
         if (XIsNext && squares[i]!="X") return;
         if (!XIsNext && squares[i]!="O") return;
         setAdjNext(i);
@@ -59,7 +102,13 @@ export default function Board() {
     }
   }
 
-  let status = "Next player: " + (XIsNext ? "X" : "O");
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = "Next player: " + (XIsNext ? "X" : "O");
+  }
 
   return (
     <>
@@ -103,35 +152,4 @@ function calculateWinner(squares){
   }
 
   return null;
-}
-
-function adjacentMove(start, end){
-  if (start == 0) {
-    return [1, 3, 4].includes(end);
-  }
-  if (start == 1) {
-    return [0, 2, 3, 4, 5].includes(end);
-  }
-  if (start == 2) {
-    return [1, 4, 5].includes(end);
-  }
-  if (start == 3) {
-    return [0, 1, 4, 6, 7].includes(end);
-  }
-  if (start == 4) {
-    return [0, 1, 2, 3, 5, 6, 7, 8].includes(end);
-  }
-  if (start == 5) {
-    return [1, 2, 4, 7, 8].includes(end);
-  }
-  if (start == 6) {
-    return [3, 4, 7].includes(end);
-  }
-  if (start == 7) {
-    return [3, 4, 5, 6, 8].includes(end);
-  }
-  if (start == 8) {
-    return [4, 5, 7].includes(end);
-  }
-  return false;
 }
