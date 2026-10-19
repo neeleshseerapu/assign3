@@ -155,6 +155,27 @@ class TestChorusLapilli(unittest.TestCase):
         tiles[0].click()
         self.assertTileIs(tiles[0], self.SYMBOL_X)
 
+    def test_requirement_6_x_win(self):
+        tiles = self.driver.find_elements(By.XPATH, self.BOARD_TILE_XPATH)
+        self.assertBoardEmpty(tiles)
+
+        tiles[0].click()
+        tiles[3].click()
+        tiles[1].click()
+        tiles[4].click()
+        tiles[2].click()
+
+        tiles[5].click()
+        self.assertTileIs(tiles[5], self.SYMBOL_BLANK)
+        tiles[6].click()
+        self.assertTileIs(tiles[6], self.SYMBOL_BLANK)
+        tiles[7].click()
+        self.assertTileIs(tiles[7], self.SYMBOL_BLANK)
+        tiles[8].click()
+        self.assertTileIs(tiles[8], self.SYMBOL_BLANK)
+        
+
+
 
 # ================= [DO NOT MAKE ANY CHANGES BELOW THIS LINE] =================
 
