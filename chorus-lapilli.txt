@@ -1,0 +1,11 @@
+October 19th, 9:53 AM:
+I have begun the modifications to build chorus-lapilli. The first thing I am doing is to keep track of the number of moves and whether the next click is to move a square or not. My code currently has a lot of if-else statements, which has caused me to run into bugs such as the turn changing on every click, which is no longer true in chorus-lapilli. To combat this, I will separate my handle click function into two distinct states. One when the number of moves is greater than six and one when it is less than.
+
+October 19th, 10:24 AM:
+By separating the game states, I successfully now allow for... wait nevermind. Clicking a square of a character and then moving it to another square with another character on it makes the character disappear. Fixing it now.
+
+October 19th, 10:27 AM:
+The fix was simple, all I had to do was add a check to the adjacent move to ensure the square we are moving to is not occupied. The next step is actually making sure that the move can only be adjacent.
+
+October 19th, 10:44 AM:
+I restricted moves to only adjacent squares by making a function that checks the start and end to see if a move is adjacent. I ran into a problem with square 0, since I was checking if there was a start position by doing !adjNext, but this would return false even when we had a position as 0. I fixed this by checking for a start position by using adjNext == null.

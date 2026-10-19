@@ -17,27 +17,49 @@ function Square({ value, onSquareClick }) {
 export default function Board() {
   const [XIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [numMoves, setNumMoves] = useState(0);
+  const [adjNext, setAdjNext] = useState(null);
+
 
   function handleClick(i) {
-    if (squares[i] || calculateWinner(squares)) return;
-    const nextSquares = squares.slice();
-    if (XIsNext) {
-      nextSquares[i] = 'X';
+    if (numMoves < 6) {
+      if (squares[i] || calculateWinner(squares)) return;
+
+      const nextSquares = squares.slice();
+      if (XIsNext) {
+        nextSquares[i] = 'X';
+      } else {
+        nextSquares[i] = 'O';
+      }
+
+      setSquares(nextSquares);
+      setXIsNext(!XIsNext);
+      setNumMoves(numMoves+1);
     } else {
-      nextSquares[i] = 'O';
+      const nextSquares = squares.slice();
+      
+      if (adjNext == null) {
+        if (!squares[i]) return;
+        if (XIsNext && squares[i]!="X") return;
+        if (!XIsNext && squares[i]!="O") return;
+        setAdjNext(i);
+      } else {
+        if (squares[i] || !adjacentMove(adjNext, i)) {
+          setAdjNext(null);
+          return;
+        }
+
+        nextSquares[i] = nextSquares[adjNext];
+        nextSquares[adjNext] = null;
+        setAdjNext(null);
+        setSquares(nextSquares);
+        setXIsNext(!XIsNext);
+        setNumMoves(numMoves+1);
+      }
     }
-
-    setSquares(nextSquares);
-    setXIsNext(!XIsNext);
   }
 
-  const winner = calculateWinner(squares);
-  let status;
-  if (winner) {
-    status = "Winner: " + winner;
-  } else {
-    status = "Next player: " + (XIsNext ? "X" : "O");
-  }
+  let status = "Next player: " + (XIsNext ? "X" : "O");
 
   return (
     <>
@@ -81,4 +103,35 @@ function calculateWinner(squares){
   }
 
   return null;
+}
+
+function adjacentMove(start, end){
+  if (start == 0) {
+    return [1, 3, 4].includes(end);
+  }
+  if (start == 1) {
+    return [0, 2, 3, 4, 5].includes(end);
+  }
+  if (start == 2) {
+    return [1, 4, 5].includes(end);
+  }
+  if (start == 3) {
+    return [0, 1, 4, 6, 7].includes(end);
+  }
+  if (start == 4) {
+    return [0, 1, 2, 3, 5, 6, 7, 8].includes(end);
+  }
+  if (start == 5) {
+    return [1, 2, 4, 7, 8].includes(end);
+  }
+  if (start == 6) {
+    return [3, 4, 7].includes(end);
+  }
+  if (start == 7) {
+    return [3, 4, 5, 6, 8].includes(end);
+  }
+  if (start == 8) {
+    return [4, 5, 7].includes(end);
+  }
+  return false;
 }
