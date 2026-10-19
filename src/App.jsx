@@ -87,6 +87,10 @@ export default function Board() {
         if (!XIsNext && squares[i]!="O") return;
         setAdjNext(i);
       } else {
+        if (squares[i] == (XIsNext ? 'X' : 'O')) {
+          setAdjNext(i);
+          return;
+        }
         if (squares[i] || !adjacentMove(adjNext, i)) {
           setAdjNext(null);
           return;

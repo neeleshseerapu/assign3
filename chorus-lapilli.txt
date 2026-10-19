@@ -12,3 +12,6 @@ I restricted moves to only adjacent squares by making a function that checks the
 
 October 19th, 2:48 PM:
 Added a restriction to the adjacent check to stop the a move if the center is occupied by the current actor and the move they are making does not win. I was confused as to why it was not working, but then I realized that moving the center piece should not have this restriction so I made it so that the restriction does not apply if start == 4.
+
+October 19th, 4:26 PM:
+Made it so that selecting another tile of the same type switched the selection rather than resetting the selection.
