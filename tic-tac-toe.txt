@@ -13,3 +13,6 @@ Used 'useState' to setValue of the square to X when the user clicks the square.
 October 18th, 7:46 PM:
 Implemented a state within the board to keep track of the squares as an array, instead of managing each state individually. This will be useful for finding the winner later. Also, we don't edit the squares array, but rather make a copy and update the array with the edited copy so that we can store earlier arrays as history. Also created a new state variable to keep track of whether the next turn is an X or O, and we do not make any updates to the board if the square already has a value. The one confusing part in this addition was how to handle the onClick for the square by using a callback function, so that it doesn't infinitely rerender. The syntax for it was a bit confusing with the curly braces, but overall, it was trivial to fix.
 
+October 18th, 10:44 PM:
+Finished the base Tic-Tac-Toe game by adding a calculate win function and checking it each turn to see if the game has ended and then displaying the winner. The one error I encountered was that I defined my array of winningLines a certain name, and then forgot to use that name later on in the code, which caused the page to not render, so I had to look at the error log by inspecting the page to find the error.
+
