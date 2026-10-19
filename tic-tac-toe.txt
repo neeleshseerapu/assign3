@@ -1,0 +1,15 @@
+October 18th, 6:22 PM:
+Cloned assignment repo and set up repository with './helper init'
+
+October 18th, 6:42 PM:
+Built the board in tic-tac-toe, pretty simple. The only bug I encountered was wrapping the return in a parent element, but it was a quick fix.
+
+October 18th, 6:58 PM:
+Separated the squares from the board into a reusable square component that takes in a display value as a variable. Also gave the square an onclick functionality. The error I made was calling it 'onclick' instead of 'onClick'.
+
+October 18th, 7:05 PM:
+Used 'useState' to setValue of the square to X when the user clicks the square.
+
+October 18th, 7:46 PM:
+Implemented a state within the board to keep track of the squares as an array, instead of managing each state individually. This will be useful for finding the winner later. Also, we don't edit the squares array, but rather make a copy and update the array with the edited copy so that we can store earlier arrays as history. Also created a new state variable to keep track of whether the next turn is an X or O, and we do not make any updates to the board if the square already has a value. The one confusing part in this addition was how to handle the onClick for the square by using a callback function, so that it doesn't infinitely rerender. The syntax for it was a bit confusing with the curly braces, but overall, it was trivial to fix.
+
