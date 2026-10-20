@@ -11,7 +11,17 @@ October 19th, 10:44 AM:
 I restricted moves to only adjacent squares by making a function that checks the start and end to see if a move is adjacent. I ran into a problem with square 0, since I was checking if there was a start position by doing !adjNext, but this would return false even when we had a position as 0. I fixed this by checking for a start position by using adjNext == null.
 
 October 19th, 2:48 PM:
-Added a restriction to the adjacent check to stop the a move if the center is occupied by the current actor and the move they are making does not win. I was confused as to why it was not working, but then I realized that moving the center piece should not have this restriction so I made it so that the restriction does not apply if start == 4.
+Added a restriction to the adjacent check to stop the move if the center is occupied by the current actor and the move they are making does not win. I was confused as to why it was not working, but then I realized that moving the center piece should not have this restriction so I made it so that the restriction does not apply if start == 4.
 
 October 19th, 4:26 PM:
 Made it so that selecting another tile of the same type switched the selection rather than resetting the selection.
+
+October 19th, 4:51 PM:
+Added a test case for requirement 6 that checked if early wins stopped further clicks, however, the gradescope still fails while the test passes. Nevermind, I just submitted again and it worked!
+
+Steps to Modify from Tic-Tac-Toe:
+1. First, add a state to the board that keeps track of the number of moves that have been executed already. This will help us separate the game into two phases, before six moves finished, and after six moves finished.
+2. For the first six moves, the game should function like normal tic-tac-toe. Wrap it in an if-statement and create an else statement for the moving phase of the game. Add a state to track whether the click is the first or second click of a two click sequence. If it is the first click, the state should be null. If it is the second click, then the state should contain the number of the square that was clicked first.
+3. Now, for the phase of the game after six moves. Create a function in the board to check if a move consisting of a start and end position is a valid adjacent move.
+4. At the end of the adjacent check function, check if the center of the board is occupied. If the adjacent move does not win the game while the center is occupied, then do not allow the move. Also, exempt square 4 from this check as it a move that originates from the center must leave the center empty.
+5. Add the calculate win function to the phase 2 else block, and the game is complete.
